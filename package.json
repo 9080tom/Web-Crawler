@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/9080tom/Web-Crawler#readme",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
     "nodemon": "^1.19.0"
   }
 }
