@@ -1,5 +1,5 @@
 const http = require("http");
-const fetchPage = require("./url-functions");
+const { fetchPage } = require("./url-functions");
 
 const server = http.createServer((req, res) => {
   handlePost(req, ({ url }) => {

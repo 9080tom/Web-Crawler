@@ -1,11 +1,15 @@
 const https = require("https");
 
-const parseUrls = body => {
+const parseUrls = (body, baseUrl) => {
   const matches = body
-    .match(/href=".*?"/g)
-    .map(match => match.split('"')[1])
+    .replace(/"/g, "")
+    .match(/(?<=href=)([^ >]+)/g)
     .filter(link => {
       return !link.startsWith("#") && !link.startsWith("mailto");
+    })
+    .map(link => {
+      if (link.startsWith("img")) link = link.slice(3);
+      return link.startsWith("/") ? baseUrl + link : link;
     });
   return matches;
 };
@@ -18,7 +22,7 @@ const fetchPage = (url, cb) => {
         body += chunk;
       });
       res.on("end", () => {
-        cb(parseUrls(body));
+        cb(parseUrls(body, url));
       });
     })
     .on("error", e => {
@@ -26,4 +30,4 @@ const fetchPage = (url, cb) => {
     });
 };
 
-module.exports = (parseUrls, fetchPage);
+module.exports = { parseUrls, fetchPage };
