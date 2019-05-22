@@ -1,7 +1,10 @@
 const http = require("http");
+const fetchPage = require("./url-functions");
 
 const server = http.createServer((req, res) => {
-  handlePost(req, ({ url }) => {});
+  handlePost(req, ({ url }) => {
+    fetchPage(url, matches => res.end(JSON.stringify(matches)));
+  });
 });
 
 const handlePost = (req, cb) => {
